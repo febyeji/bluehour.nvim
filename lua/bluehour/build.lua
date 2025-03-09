@@ -2,9 +2,9 @@
 
 local uv = vim.loop
 
--- Get the directory where the melange plugin is located
+-- Get the directory where the bluehour plugin is located
 local function get_plugin_dir()
-  return debug.getinfo(1).source:match('@?(.*/)'):gsub('/lua/melange/$', '')
+  return debug.getinfo(1).source:match('@?(.*/)'):gsub('/lua/bluehour/$', '')
 end
 
 -- Write a string to a file
@@ -23,10 +23,10 @@ local function interpolate(str, tbl)
   return str:gsub('%$([%w_]+)', tbl)
 end
 
--- Turn melange naming conventions into more common ANSI names
+-- Turn bluehour naming conventions into more common ANSI names
 local function get_palette(variant)
-  package.loaded['melange/palettes/' .. variant] = nil
-  local colors = require('melange/palettes/' .. variant)
+  package.loaded['bluehour/palettes/' .. variant] = nil
+  local colors = require('bluehour/palettes/' .. variant)
   -- stylua: ignore
   return {
     bg             = colors.a.bg,
@@ -125,7 +125,7 @@ end
 local function generate_windows_terminal_theme(variant, palette)
   local template = [=[
   {
-    "name": "melange $variant",
+    "name": "bluehour $variant",
     "tab": 
     {
       "background": "$bg",
@@ -164,19 +164,19 @@ local function build(terminals)
         local template = attrs.colorscheme_template:gsub('$variant', variant)
         local cs_fmt = interpolate(template, palette)
         local tm_fmt = generate_windows_terminal_theme(variant, palette)
-        fwrite(cs_fmt, string.format('%s/melange_%s_colorscheme%s', dir, variant, attrs.ext))
-        fwrite(tm_fmt, string.format('%s/melange_%s_theme%s', dir, variant, attrs.ext))
+        fwrite(cs_fmt, string.format('%s/bluehour_%s_colorscheme%s', dir, variant, attrs.ext))
+        fwrite(tm_fmt, string.format('%s/bluehour_%s_theme%s', dir, variant, attrs.ext))
       else
         local fmt = interpolate(attrs.template, palette)
         if term == 'foot' then
           fmt = fmt:gsub('#', '')
         end
-        fwrite(fmt, string.format('%s/melange_%s%s', dir, variant, attrs.ext))
+        fwrite(fmt, string.format('%s/bluehour_%s%s', dir, variant, attrs.ext))
       end
     end
 
-    fwrite(generate_iterm2(palette), string.format('%s/term/iterm2/melange_%s.itermcolors', get_plugin_dir(), variant))
-    fwrite(vim.json.encode(palette), get_plugin_dir() .. string.format('/melange_%s.json', variant))
+    fwrite(generate_iterm2(palette), string.format('%s/term/iterm2/bluehour_%s.itermcolors', get_plugin_dir(), variant))
+    fwrite(vim.json.encode(palette), get_plugin_dir() .. string.format('/bluehour_%s.json', variant))
   end
 end
 
@@ -210,7 +210,7 @@ terminals.windows_terminal.colorscheme_template = [=[
   "cyan": "$cyan",
   "foreground": "$fg",
   "green": "$green",
-  "name": "melange $variant",
+  "name": "bluehour $variant",
   "purple": "$magenta",
   "red": "$red",
   "selectionBackground": "$dark_white",
@@ -322,7 +322,7 @@ color15 $bright_white
 ]=]
 
 terminals.terminator.template = [=[
- [[melange]]
+ [[bluehour]]
     background_color = "$bg"
     cursor_color = "$fg"
     foreground_color = "$fg"
@@ -361,7 +361,7 @@ brights = [
 ]=]
 
 terminals.zellij.template = [=[
-melange-$variant {
+bluehour-$variant {
   fg $fg
   bg $bg
   black $black
