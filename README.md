@@ -1,6 +1,6 @@
 # Bluehour.nvim
 
-Bluehour.nvim is a Neovim colorscheme based on the **Arthur** theme from [Gogh](https://github.com/Gogh-Co/Gogh). This colorscheme is designed to bring the rich and vivid tones of Arthur to Neovim while maintaining a consistent experience across your terminal and editor.
+Bluehour.nvim is a Neovim colorscheme based on the **Decaf (base16)** theme.
 
 ## Features
 - Supports Treesitter, LSP, and UI elements
